@@ -15,6 +15,16 @@ export default function Home() {
                 setDoctors(res.data)
             })
     }
+    function deleteDoctor(id){
+        console.log(id)
+        axios.delete(`https://doc-back1.onrender.com/doctors/${id}`)
+            .then(res=>{
+                console.log(res,res.status)
+                if(res.status===200){
+                    fetchDoctors()
+                }
+            })
+    }
     const filteredDoctors=doctors.filter((i)=>{
         return i.name.toLowerCase().includes(search.toLowerCase())
     })
@@ -31,7 +41,8 @@ export default function Home() {
                                 salary={i.salary}
                                 gender={i.gender}
                                 specialization={i.specialization}
-                                age={i.age} />
+                                age={i.age} 
+                                deleteDoctor={()=>deleteDoctor(i.id)}/>
                         ))
                     ) : (<p>Doctor not found....</p>)
                 }
